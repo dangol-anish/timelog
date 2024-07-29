@@ -1,4 +1,5 @@
 import Calendar from "@/components/Calendar";
+import Logs from "@/components/Logs";
 import Navbar from "@/components/Navbar";
 import NewLogs from "@/components/NewLogs";
 
@@ -9,6 +10,7 @@ export default function Home() {
         <Navbar />
         <NewLogs />
         <Calendar />
+        <Logs />
       </div>
     </>
   );

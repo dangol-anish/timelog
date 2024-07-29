@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -12,8 +13,28 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { GrAdd } from "react-icons/gr";
 import { DatePicker } from "./DatePicker";
+import { useLogStore } from "@/store";
 
 export default function NewLogs() {
+  const log = useLogStore((state) => state.log);
+  const setLog = useLogStore((state) => state.setLog);
+
+  const validateLog = () => {
+    if (!log.date || !log.hour || log.hour === 0) {
+      throw "Date or Hours cannot be empty";
+    } else if (log.hour >= 24) {
+      throw "Please input a valid hour";
+    }
+  };
+
+  const submitLog = () => {
+    try {
+      validateLog();
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -43,7 +64,15 @@ export default function NewLogs() {
             <Label htmlFor="Hour" className="text-center">
               Hour
             </Label>
-            <Input id="Hour" type="number" className="col-span-3" />
+            <Input
+              id="Hour"
+              type="number"
+              className="col-span-3"
+              value={log.hour}
+              onChange={(e) =>
+                setLog({ ...log, hour: parseInt(e.target.value) })
+              }
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="Note" className="text-center">
@@ -53,11 +82,15 @@ export default function NewLogs() {
               id="Note"
               placeholder="Notes of Log"
               className="col-span-3"
+              value={log.note}
+              onChange={(e) => setLog({ ...log, note: e.target.value })}
             />
           </div>
         </div>
         <DialogFooter>
-          <Button type="submit">Save</Button>
+          <Button type="submit" onClick={submitLog}>
+            Save
+          </Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>

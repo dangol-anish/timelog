@@ -14,8 +14,10 @@ import { Label } from "@/components/ui/label";
 import { GrAdd } from "react-icons/gr";
 import { DatePicker } from "./DatePicker";
 import { useLogStore } from "@/store";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function NewLogs() {
+  const { toast } = useToast();
   const log = useLogStore((state) => state.log);
   const setLog = useLogStore((state) => state.setLog);
 
@@ -31,7 +33,11 @@ export default function NewLogs() {
     try {
       validateLog();
     } catch (error) {
-      console.log(error);
+      toast({
+        title: "Failed to create Log",
+        variant: "destructive",
+        description: error as string,
+      });
     }
   };
 

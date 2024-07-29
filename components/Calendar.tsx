@@ -1,4 +1,14 @@
 import dayjs from "dayjs";
+import { CalendarDays } from "lucide-react";
+
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "@/components/ui/hover-card";
+import { cn } from "@/lib/utils";
 
 export default function Calendar() {
   // generate an array of date for all the days in a specified month and year, if not specified, it takes current year and month
@@ -15,12 +25,45 @@ export default function Calendar() {
     return datesArray;
   }
 
+  function getColor(value: number): string {
+    switch (true) {
+      // case value === 0:
+      //   return "bg-gray-100";
+      case value > 0 && value < 5:
+        return "bg-green-100";
+      case value >= 5 && value < 10:
+        return "bg-green-300";
+      case value >= 10:
+        return "bg-green-500";
+      default:
+        return "bg-gray-100";
+    }
+  }
+
   getDateInMonths();
+  const hour = 0;
   return (
     <>
-      <div className="border border-dashed flex flex-wrap gap-2 p-5 justify-center rounded-sm">
+      <div className="border border-dashed flex flex-wrap gap-2 p-10 justify-center rounded-sm cursor-pointer">
         {getDateInMonths().map((value, index) => {
-          return <div className="h-5 w-5 bg-gray-100" key={index}></div>;
+          //   return <div className="h-5 w-5 bg-gray-100" key={index}></div>;
+          return (
+            <>
+              <HoverCard key={index}>
+                <HoverCardTrigger asChild>
+                  <div
+                    className={cn(
+                      "h-5 w-5 rounded-sm cursor-pointer",
+                      getColor(hour || 0)
+                    )}
+                  ></div>
+                </HoverCardTrigger>
+                <HoverCardContent className="w-80">
+                  {hour || 0} hours on {value}
+                </HoverCardContent>
+              </HoverCard>
+            </>
+          );
         })}
       </div>
     </>

@@ -9,6 +9,7 @@ import { cn } from "@/lib/utils";
 import { useLogStore } from "@/store";
 
 export default function Calendar() {
+  const logs = useLogStore((state) => state.logs);
   // generate an array of date for all the days in a specified month and year, if not specified, it takes current year and month
   function getDateInMonths(year = dayjs().year(), month = dayjs().month()) {
     const startDate = dayjs().year(year).month(month).date(1);
@@ -46,6 +47,7 @@ export default function Calendar() {
       <div className="border border-dashed flex flex-wrap gap-2 p-10 justify-center rounded-sm cursor-pointer">
         {getDateInMonths().map((value, index) => {
           //   return <div className="h-5 w-5 bg-gray-100" key={index}></div>;
+          const log = logs[value];
           return (
             <>
               <HoverCard key={index}>
@@ -53,12 +55,12 @@ export default function Calendar() {
                   <div
                     className={cn(
                       "h-5 w-5 rounded-sm cursor-pointer",
-                      getColor(hour || 0)
+                      getColor(log?.hour || 0)
                     )}
                   ></div>
                 </HoverCardTrigger>
                 <HoverCardContent className="w-80">
-                  {hour || 0} hours on {value}
+                  {log?.hour || 0} hours on {value}
                 </HoverCardContent>
               </HoverCard>
             </>

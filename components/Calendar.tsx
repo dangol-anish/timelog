@@ -1,16 +1,15 @@
+"use client";
 import dayjs from "dayjs";
-import { CalendarDays } from "lucide-react";
-
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import {
   HoverCard,
   HoverCardContent,
   HoverCardTrigger,
 } from "@/components/ui/hover-card";
 import { cn } from "@/lib/utils";
+import { useLogStore } from "@/store";
 
 export default function Calendar() {
+  const logs = useLogStore((state) => state.logs);
   // generate an array of date for all the days in a specified month and year, if not specified, it takes current year and month
   function getDateInMonths(year = dayjs().year(), month = dayjs().month()) {
     const startDate = dayjs().year(year).month(month).date(1);
@@ -21,7 +20,7 @@ export default function Calendar() {
     for (let i = startDate.date(); i <= endDate.date(); i++) {
       datesArray.push(startDate.date(i).format("YYYY-MM-DD"));
     }
-    console.log(datesArray);
+
     return datesArray;
   }
 
@@ -42,6 +41,7 @@ export default function Calendar() {
 
   getDateInMonths();
   const hour = 0;
+
   return (
     <>
       <div className="border border-dashed flex flex-wrap gap-2 p-10 justify-center rounded-sm cursor-pointer">

@@ -15,11 +15,14 @@ import { GrAdd } from "react-icons/gr";
 import { DatePicker } from "./DatePicker";
 import { useLogStore } from "@/store";
 import { useToast } from "@/components/ui/use-toast";
+import dayjs from "dayjs";
 
 export default function NewLogs() {
   const { toast } = useToast();
   const log = useLogStore((state) => state.log);
+  const logs = useLogStore((state) => state.logs);
   const setLog = useLogStore((state) => state.setLog);
+  const setLogs = useLogStore((state) => state.setLogs);
 
   const validateLog = () => {
     if (!log.date || !log.hour || log.hour === 0) {
@@ -32,6 +35,8 @@ export default function NewLogs() {
   const submitLog = () => {
     try {
       validateLog();
+      setLogs(log, dayjs(log.date).format("YYYY-MM-DD"));
+      // console.log(logs);
     } catch (error) {
       toast({
         title: "Failed to create Log",

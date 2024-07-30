@@ -9,7 +9,6 @@ import { cn } from "@/lib/utils";
 import { useLogStore } from "@/store";
 
 export default function Calendar() {
-  const logs = useLogStore((state) => state.logs);
   // generate an array of date for all the days in a specified month and year, if not specified, it takes current year and month
   function getDateInMonths(year = dayjs().year(), month = dayjs().month()) {
     const startDate = dayjs().year(year).month(month).date(1);

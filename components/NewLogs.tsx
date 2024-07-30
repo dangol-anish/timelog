@@ -36,7 +36,12 @@ export default function NewLogs() {
     try {
       validateLog();
       setLogs(log, dayjs(log.date).format("YYYY-MM-DD"));
-      // console.log(logs);
+      toast({
+        title: "Successfully created log",
+        description: `Committed ${
+          log.hour
+        } hours on ${log.date.toDateString()}`,
+      });
     } catch (error) {
       toast({
         title: "Failed to create Log",

@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import { cn } from "@/lib/utils";
 import { useLogStore } from "@/store";
 
 export default function Logs() {
@@ -27,7 +28,10 @@ export default function Logs() {
         {Object.keys(logs).map((key) => {
           const log = logs[key];
           return (
-            <TableRow key={key}>
+            <TableRow
+              key={key}
+              className={cn(log.hour <= 5 ? "bg-red-100" : "")}
+            >
               <TableCell className="font-medium">
                 {log.date.toDateString()}
               </TableCell>

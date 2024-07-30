@@ -24,6 +24,10 @@ export default function NewLogs() {
   const setLog = useLogStore((state) => state.setLog);
   const setLogs = useLogStore((state) => state.setLogs);
 
+  const closeDialog = () => {
+    document.getElementById("close-btn")?.click();
+  };
+
   const validateLog = () => {
     if (!log.date || !log.hour || log.hour === 0) {
       throw "Date or Hours cannot be empty";
@@ -42,6 +46,7 @@ export default function NewLogs() {
           log.hour
         } hours on ${log.date.toDateString()}`,
       });
+      closeDialog();
     } catch (error) {
       toast({
         title: "Failed to create Log",

@@ -4,7 +4,6 @@ import {
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -14,6 +13,8 @@ import { useLogStore } from "@/store";
 
 export default function Logs() {
   const logs = useLogStore((state) => state.logs);
+
+  //list from supabase
   return (
     <Table>
       <TableCaption>A list of your recent logs.</TableCaption>

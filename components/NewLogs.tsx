@@ -47,6 +47,8 @@ export default function NewLogs() {
         } hours on ${log.date.toDateString()}`,
       });
       closeDialog();
+
+      // call to supabase
     } catch (error) {
       toast({
         title: "Failed to create Log",
